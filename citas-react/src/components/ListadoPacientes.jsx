@@ -1,8 +1,7 @@
 import React from 'react'
 import Paciente from './Paciente';
 
-
-const ListadoPacientes = () => {
+const ListadoPacientes = ({ pacientes }) => {
   return (
     <div className='md:w-1/2 lg:w-3/5 md:h-screen overflow-y-scroll '>
       {/* HEADER LISTADO */}
@@ -11,9 +10,16 @@ const ListadoPacientes = () => {
         Administra tus {''}
         <span className='text-indigo-600 font-bold'>Pacientes y Citas</span>
       </p>
-      {/* LISTADO */}
-      <Paciente/>
-      <Paciente/>
+
+      {
+        pacientes.map((data) => (
+          <Paciente
+            key={data.propietario}
+            paciente={data}
+          />
+        ))
+      }
+
     </div>
   )
 }
