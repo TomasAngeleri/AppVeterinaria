@@ -12,6 +12,12 @@ const Formulario = ({ pacientes, setPacientes }) => {
 
   const errorFormularioCamposObligatorios = 'Todos los campos son obligatorios';
 
+  const generarId = () => {
+    const random = Math.random().toString(36).substring(2);
+    const fecha = Date.now().toString(36)
+    return random + fecha;
+  }
+
   // Validacion del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +32,8 @@ const Formulario = ({ pacientes, setPacientes }) => {
       propietario,
       contactoPropietario,
       fechaAlta,
-      observaciones
+      observaciones,
+      id: generarId()
     }
 
     setPacientes([...pacientes, objetoPaciente]);
