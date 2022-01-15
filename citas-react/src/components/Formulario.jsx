@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import Error from './Error';
+import Titulo from './Titulo';
 
 const Formulario = ({ pacientes, setPacientes }) => {
   const [nombre, setNombre] = useState('');
@@ -51,12 +52,11 @@ const Formulario = ({ pacientes, setPacientes }) => {
 
   return (
     <div className='md:w-1/2 lg:w-2/5 mx-5'>
-      {/* HEADER FORMULARIO */}
-      <h2 className='font-black text-3xl text-center'>Seguimiento Paciente</h2>
-      <p className='text-xl mt-5 text-center mb-5'>
-        Añade Pacientes y {''}
-        <span className='text-indigo-600 font-bold'>Administralos</span>
-      </p>
+      <Titulo
+        titulo={"Seguimiento Paciente"}
+        subtitulo={"Añade Pacientes y"}
+        textoColor={"Administralos"}
+      />
 
       {/* FORMULARIO DE REGISTRO */}
 

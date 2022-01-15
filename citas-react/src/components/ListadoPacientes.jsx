@@ -1,24 +1,35 @@
 import React from 'react'
 import Paciente from './Paciente';
+import Titulo from './Titulo';
 
-const ListadoPacientes = ({ pacientes }) => {
+const ListadoPacientes = ({ pacientes, setPaciente }) => {
   return (
     <div className='md:w-1/2 lg:w-3/5 md:h-screen overflow-y-scroll '>
       {/* HEADER LISTADO */}
-      <h2 className='font-black text-3xl text-center'>Listado Pacientes</h2>
-      <p className='text-xl mt-5 mb-5 text-center '>
-        Administra tus {''}
-        <span className='text-indigo-600 font-bold'>Pacientes y Citas</span>
-      </p>
-
-      {
-        pacientes.map((data) => (
-          <Paciente
-            key={data.id}
-            paciente={data}
+      {pacientes && pacientes.length ?
+        <>
+          <Titulo
+            titulo={"Listado Pacientes"}
+            subtitulo={"Administra tus"}
+            textoColor={"Pacientes y Citas"}
           />
-        ))
+          {
+            pacientes.map((data) => (
+              <Paciente
+                key={data.id}
+                paciente={data}
+              />
+            ))
+          }
+        </>
+        :
+        <Titulo
+          titulo={"No hay pacientes"}
+          subtitulo={"Cargue los pacientes"}
+          textoColor={"y se verán aqui"}
+        />
       }
+
 
     </div>
   )
