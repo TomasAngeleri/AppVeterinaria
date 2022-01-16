@@ -1,9 +1,9 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Error from './Error';
 import Titulo from './Titulo';
 
-const Formulario = ({ pacientes, setPacientes }) => {
+const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
   const [nombre, setNombre] = useState('');
   const [propietario, setPropietario] = useState('');
   const [contactoPropietario, setcontactoPropietario] = useState('');
@@ -12,6 +12,17 @@ const Formulario = ({ pacientes, setPacientes }) => {
   const [errorFormulario, setErrorFormulario] = useState(false);
 
   const errorFormularioCamposObligatorios = 'Todos los campos son obligatorios';
+
+  useEffect(() => {
+    if (Object.keys(paciente).length > 0) {
+      setNombre(paciente.nombre);
+      setPropietario(paciente.propietario);
+      setcontactoPropietario(paciente.contactoPropietario);
+      setFechaAlta(paciente.fechaAlta);
+      setObservaciones(paciente.observaciones);
+      setErrorFormulario(paciente.errorFormulario);
+    }
+  }, [paciente])
 
   const generarId = () => {
     const random = Math.random().toString(36).substring(2);
@@ -34,10 +45,24 @@ const Formulario = ({ pacientes, setPacientes }) => {
       contactoPropietario,
       fechaAlta,
       observaciones,
-      id: generarId()
     }
 
-    setPacientes([...pacientes, objetoPaciente]);
+    if (paciente.id) {
+      //Editando registro
+      objetoPaciente.id = paciente.id;
+      const pacientesActualizados = pacientes.map(pacienteState =>
+        pacienteState.id === objetoPaciente.id ? objetoPaciente : pacienteState
+      );
+
+      setPacientes(pacientesActualizados);
+      setPaciente({})
+
+    } else {
+      //Nuevo registro
+      objetoPaciente.id = generarId();
+      setPacientes([...pacientes, objetoPaciente]);
+    }
+
     limpiarForm();
 
   }
@@ -123,7 +148,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
         <input
           type="submit"
           className='bg-indigo-600 w-full p-3 text-white uppercase font-bold rounded-md hover:bg-indigo-700 cursor-pointer transition-all'
-          value="Cargar mascota"
+          value={paciente.id ? 'Editar mascota' : 'Cargar mascota'}
         />
 
       </form>
